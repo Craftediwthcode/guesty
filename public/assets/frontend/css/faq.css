@@ -1,0 +1,50 @@
+section.faq .accordion-item{
+    margin-bottom: 20px;
+    border: 0px solid #fff;
+}
+section.faq button.accordion-button {
+   font-size: var(--f20);
+   color: var(--black-color);
+   padding: 0px;
+   border-bottom: 1px solid #DBDEE3;
+   padding-bottom: 30px;
+   margin-bottom: 0px;
+   padding-left: 49px;
+}
+section.faq .accordion-button::after {
+  background-image: url("../images/plus.png");
+  transition: all 0.5s;
+  width: 31px;
+    height: 31px;
+    background-color: var(--secondary-color);
+    border-radius: 5px;
+    background-size: 13px;
+    background-position: center;
+}
+section.faq .accordion-button:hover::after{
+    background-color: var(--other-color);
+}
+section.faq .accordion-button:not(.collapsed)::after {
+  background-image: url("../images/minus.png") !important;
+  background-position: center 75%;
+  background-color: var(--other-color);
+}
+section.faq .accordion-button::after {
+  transition: all 0.5s;
+  /* margin-left: 0; */
+  /* margin-right: auto; */
+  position: absolute;
+  left: 0;
+}
+section.faq .accordion-body {
+    padding: 15px 18px;
+    background: #EFF2F5;
+    margin-top: -15px;
+    margin-bottom: 10px;
+}
+section.faq .accordion-button:not(.collapsed){
+    background-color: transparent;
+    box-shadow: inset 0 0px 0 rgba(0, 0, 0, .125);
+    margin-bottom: 0px;
+    border-bottom: 0px solid;
+}

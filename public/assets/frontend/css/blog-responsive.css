@@ -1,0 +1,110 @@
+@media(max-width: 980px) {
+    .blog-wrapper {
+        padding-bottom:50px
+    }
+
+    section.blog-detail-wrapper h1 {
+        font-size: 36px
+    }
+
+    section.blog-detail-wrapper h2 {
+        font-size: 30px
+    }
+
+    section.blog-detail-wrapper h3 {
+        font-size: 25px
+    }
+
+    section.blog-detail-wrapper h4 {
+        font-size: 22px
+    }
+
+    section.blog-detail-wrapper h5 {
+        font-size: 20px
+    }
+
+    section.blog-detail-wrapper h6 {
+        font-size: 19px
+    }
+
+    section.blog-detail-wrapper h2.widget-title,section.blog-detail-wrapper h2.widgettitle {
+        font-size: 23px
+    }
+
+    .banner h1 {
+        font-size: var(--f30)
+    }
+
+    section.blog-detail-wrapper.mt-5 {
+        margin-top: 0 !important;
+        padding-top: 50px;
+        padding-bottom: 50px
+    }
+}
+
+@media(max-width: 540px) {
+
+    .blog-detail-image img {
+        height: 300px;
+    
+    }
+    .blog-wrapper {
+        padding-bottom:40px;
+        padding-top: 80px
+    }
+
+    .blog-wrapper .col-lg-4 {
+        padding-left: 0;
+        padding-right: 0
+    }
+
+    .blog-content h4 {
+        height: auto
+    }
+
+    section.blog-detail-wrapper h1 {
+        font-size: 28px
+    }
+
+    section.blog-detail-wrapper h2 {
+        font-size: 28px
+    }
+
+    section.blog-detail-wrapper h3 {
+        font-size: 24px
+    }
+
+    section.blog-detail-wrapper h4 {
+        font-size: 21px
+    }
+
+    section.blog-detail-wrapper h5 {
+        font-size: 19px
+    }
+
+    section.blog-detail-wrapper h6 {
+        font-size: 18px
+    }
+
+    section.blog-detail-wrapper h2.widget-title,section.blog-detail-wrapper h2.widgettitle {
+        font-size: 21px
+    }
+
+    section.blog-detail-wrapper .col-lg-8.col-xs-12.col-md-12 {
+        padding: 0
+    }
+
+    section.blog-detail-wrapper .col-lg-4.col-xs-12.col-md-12 {
+        padding: 0
+    }
+
+    .banner h1 {
+        font-size: var(--f28)
+    }
+
+    section.blog-detail-wrapper.mt-5 {
+        margin-top: 0 !important;
+        padding-top: 40px;
+        padding-bottom: 40px
+    }
+}

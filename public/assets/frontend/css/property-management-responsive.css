@@ -1,0 +1,248 @@
+@media screen and (min-width: 992px) and (max-width: 1199px){
+section.video-content img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+}
+section.about-sec img{
+	height: 700px;
+}
+}
+@media (max-width: 991px) {
+    section.how-much-earn .how-img img {
+        margin-top: 30%;
+    }
+
+    form.Search-bar {
+        width: 80%;
+    }
+
+    form.Search-bar .row {
+        gap: 10px 0;
+    }
+
+    form.Search-bar .checkbar {
+        order: 1;
+        width: 100%;
+    }
+    .search .col-3:first-child {
+        width: 50%;
+        order: 2;
+    }
+    .search .col-2:nth-child(3) {
+        width: 18%;
+        order: 3;
+        padding-left: 0;
+    }
+    .search .col-3:first-child, form.Search-bar .checkbar {
+        border-right: 0px solid #cccccc;
+    }
+    .search-bar .adult_field{
+        width: 50%;
+        order: 2;
+    }
+    form.Search-bar .sub-btn {
+        width: 98%;
+        order: 4;
+    }
+    form.Search-bar .submit-btn, form.Search-bar .submit-btn button {
+        width: 100%;
+    }
+
+    .search {
+        top: 30px;
+    }
+
+
+
+
+
+
+
+
+	section.management-banner h1{
+		font-size: 38px;
+	}
+	section.management-banner p {
+    font-size: 21px;
+}
+.experience {
+    padding: 50px 12px;
+    padding-bottom: 10px;
+}
+.experience .col-4{
+width: 50%;
+}
+.experience h4{
+font-size: 24px;
+}
+section.video-content {
+    padding: var(--p50) var(--p12);
+    }
+    section.video-content img {
+    width: 100%;
+    height: 420px;
+    object-fit: cover;
+}
+section.cta {
+    padding: 50px 12px;
+    }
+    section.about-sec {
+    padding: var(--p50) var(--p12);
+}
+section.about-sec .col-6{
+	width: 100%;
+}
+section.about-sec .about-content {
+    padding-left: 12px;
+    margin-top: 30px;
+}
+section.about-sec.rev .about-content {
+    padding-right: 12px;
+    }
+section.about-sec img{
+	height: 450px;
+}
+section.about-sec.rev .row{
+	flex-direction: column-reverse;
+}
+section.design-section {
+    padding: var(--p50) var(--p12);
+}
+section.design-section .head-sec {
+    width: 90%;
+}
+section.design-section img{
+	height: 350px;
+}
+section.activ {
+    padding: var(--p50) var(--p12);
+}
+section.activ .head-sec {
+    width: 90%;
+    }
+}
+@media (max-width: 540px) {
+    section.how-much-earn {
+        padding-top: 50px;
+    }
+    section.how-much-earn .how-img img {
+        margin-top: 0%;
+    }
+    section.abt-cta .abt-cta-content h3 {
+        font-size: 28px;
+    }
+    .search .col-2:nth-child(3) {
+        width: 25%;
+    }
+    form.Search-bar .adult-box {
+        width: auto;
+    }
+
+    input#show-target-data {
+    padding: 11px;
+    }
+    form.Search-bar {
+        width: 100%;
+    }
+section.management-banner .col-6{
+	width: 100%;
+	}
+section.management-banner img{
+	height: 300px;
+}
+section.management-banner .banner-content {
+    padding: 20px;
+    }
+        section.management-banner h1 {
+        font-size: 32px;
+    }
+    section.management-banner p {
+        font-size: 19px;
+        margin-bottom: 0;
+    }
+    .experience {
+        padding: 40px 12px;
+        padding-bottom: 10px;
+    }
+    .experience h2{
+    	margin-bottom: 30px;
+    }
+    .experience .col-4 {
+        width: 100%;
+        padding: 0px;
+        margin-bottom: 30px;
+    }
+    .experience h4 {
+        font-size: 22px;
+    }
+    section.video-content {
+        padding: var(--p40) var(--p12);
+    }
+    section.video-content .col-6{
+    	width: 100%;
+    	padding: 0px;
+    }
+    section.video-content img {
+        width: 100%;
+        height: 300px;
+    }
+    section.video-content .row{
+    	gap: 30px 0;
+    }
+    section.cta {
+        padding: 40px 12px;
+    }
+    section.about-sec {
+        padding: var(--p40) var(--p12);
+    }
+        section.about-sec .col-6 {
+        width: 100%;
+        padding: 0px;
+    }
+        section.about-sec img {
+        height: 300px;
+    }
+        section.about-sec .about-content {
+        padding-left: 0;
+    }
+    section.about-sec .abt-list i {
+    font-size: 35px;
+    width: 35px;
+    height: 35px;
+}
+section.about-sec.rev .about-content {
+    padding-right:0px;
+    padding-left: 0px;
+}
+section.design-section {
+        padding: var(--p40) var(--p12);
+    }
+    section.design-section .head-sec {
+        width: 100%;
+        margin-bottom: 30px;
+    }
+    section.design-section .col-4{
+    	width: 100%;
+    	padding: 0px;
+    }
+        section.design-section img {
+        height: 250px;
+    }
+    section.design-section .row{
+    	gap: 30px;
+    }
+    section.activ {
+        padding: var(--p40) var(--p12);
+    }
+    section.activ .head-sec {
+        width: 100%;
+        margin-bottom: 30px;
+    }
+    section.activ .col-3{
+    	width: 50%;
+    }
+    section.how-much-earn .how-content {
+        padding: 50px 25px 65px 25px;
+    }
+}

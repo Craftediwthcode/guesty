@@ -1,0 +1,47 @@
+version: '3.8'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: guesty-app
+    container_name: guesty-app
+    volumes:
+      - .:/var/www/html
+    ports:
+      - "8002:8002"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    env_file:
+      - .env
+    networks:
+      - laravel-network
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: laravel_user
+      MYSQL_PASSWORD: secret
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - laravel-network
+
+volumes:
+  mysql-data:
+  redis-data:
+
+networks:
+  laravel-network:
+    driver: bridge
