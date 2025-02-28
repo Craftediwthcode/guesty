@@ -275,7 +275,7 @@ class PropertiesController extends Controller
                     ]
                 );
                 $startDate = Carbon::now()->startOfMonth()->toDateString();
-                $endDate = Carbon::now()->addMonth()->endOfMonth()->toDateString();
+                $endDate = Carbon::now()->addMonth()->endOfMonth(1)->toDateString();
                 $propertyId = $property['_id'];
                 $property_id = $savedProperty->id;
                 $client = new Client();
@@ -293,9 +293,10 @@ class PropertiesController extends Controller
                     foreach ($chunk as $day) {
                         Calender::updateOrCreate(
                             [
-                                'listing_id' => $propertyId,
+                                'property_id' => $property_id,
                             ],
                             [
+                                'listing_id' => $propertyId,
                                 'date' => $day['date'],
                                 'property_id' => $property_id,
                                 'currency' => $day['currency'],
