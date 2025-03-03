@@ -106,6 +106,7 @@ class PropertiesController extends Controller
                                     <a class="dropdown-item" href="' . route('properties.show', $data->uuid) . '">
                                         <i class="bx bx-show me-1"></i> View
                                     </a>
+                                    <a class="dropdown-item" href="javascript:void(0);" data-uuid="' . $data->uuid . '" onclick="syncCalendar(this)"><i class="bx bx-right-arrow-alt me-1"></i>Sync Calendar</a>
                                 </div>
                             </div>';
                 })
@@ -201,7 +202,7 @@ class PropertiesController extends Controller
         $properties = collect($listings['results'] ?? []);
         $properties->chunk(10)->each(function ($propertyChunk) use ($token, $client) {
             foreach ($propertyChunk as $property) {
-                $savedProperty = Properties::updateOrCreate(
+                Properties::updateOrCreate(
                     [
                         'uuid' => $property['_id'],
                     ],
@@ -274,51 +275,6 @@ class PropertiesController extends Controller
                         'guesty_status' => $property['guestyStatus'] ?? 'false',
                     ]
                 );
-                $startDate = Carbon::now()->startOfMonth()->toDateString();
-                $endDate = Carbon::now()->addMonth()->endOfMonth(1)->toDateString();
-                $propertyId = $property['_id'];
-                $property_id = $savedProperty->id;
-                $client = new Client();
-                $url = "https://open-api.guesty.com/v1/availability-pricing/api/calendar/listings/{$propertyId}?startDate={$startDate}&endDate={$endDate}";
-                $response = $client->request('GET', $url, [
-                    'headers' => [
-                        'Authorization' => 'Bearer ' . $token,
-                        'Accept' => 'application/json',
-                    ],
-                    'verify' => false,
-                ]);
-                $calendarData = json_decode($response->getBody(), true);
-                $days = $calendarData['data']['days'] ?? [];
-                Collection::make($days)->chunk(10)->each(function ($chunk) use ($propertyId, $property_id) {
-                    foreach ($chunk as $day) {
-                        Calender::updateOrCreate(
-                            [
-                                'property_id' => $property_id,
-                            ],
-                            [
-                                'listing_id' => $propertyId,
-                                'date' => $day['date'],
-                                'property_id' => $property_id,
-                                'currency' => $day['currency'],
-                                'price' => $day['price'],
-                                'is_base_price' => $day['isBasePrice'],
-                                'min_nights' => $day['minNights'],
-                                'is_base_min_nights' => $day['isBaseMinNights'],
-                                'status' => $day['status'],
-                                'blocks' => json_encode($day['blocks'] ?? []),
-                                'block_refs' => json_encode($day['blockRefs'] ?? []),
-                                'reservation_id' => $day['reservationId'] ?? null,
-                                'reservation' => json_encode($day['reservation'] ?? []),
-                                'note' => $day['note'] ?? null,
-                                'cta' => $day['cta'],
-                                'ctd' => $day['ctd'],
-                                'request_to_book' => $day['requestToBook'],
-                                'by' => json_encode($day['by'] ?? []),
-                                'rules_applied' => json_encode($day['rulesApplied'] ?? []),
-                            ]
-                        );
-                    }
-                });
             }
         });
     }
@@ -353,5 +309,54 @@ class PropertiesController extends Controller
             'success' => $data->active == 'true' ? __('Home Page Show Activated Successfully.') : null,
             'error' => $data->active == 'false' ? __('Home Page Show Deactivated Successfully.') : null,
         ]);
+    }
+    public function syncCalender(Request $request)
+    {
+        $token = Auth::user()->guesty_token;
+        $startDate = Carbon::now()->startOfMonth()->toDateString();
+        $endDate = Carbon::now()->addMonth()->endOfMonth(1)->toDateString();
+        $propertyId = $request->property_id;
+        $client = new Client();
+        $url = "https://open-api.guesty.com/v1/availability-pricing/api/calendar/listings/{$propertyId}?startDate={$startDate}&endDate={$endDate}";
+        $response = $client->request('GET', $url, [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $token,
+                'Accept' => 'application/json',
+            ],
+            'verify' => false,
+        ]);
+        $calendarData = json_decode($response->getBody(), true);
+        $days = $calendarData['data']['days'] ?? [];
+        Collection::make($days)->chunk(10)->each(function ($chunk) use ($propertyId) {
+            foreach ($chunk as $day) {
+                Calender::updateOrCreate(
+                    [
+                        'listing_id' => $propertyId,
+                        'date' => $day['date'],
+                    ],
+                    [
+                        
+                        'date' => $day['date'],
+                        'currency' => $day['currency'],
+                        'price' => $day['price'],
+                        'is_base_price' => $day['isBasePrice'],
+                        'min_nights' => $day['minNights'],
+                        'is_base_min_nights' => $day['isBaseMinNights'],
+                        'status' => $day['status'],
+                        'blocks' => json_encode($day['blocks'] ?? []),
+                        'block_refs' => json_encode($day['blockRefs'] ?? []),
+                        'reservation_id' => $day['reservationId'] ?? null,
+                        'reservation' => json_encode($day['reservation'] ?? []),
+                        'note' => $day['note'] ?? null,
+                        'cta' => $day['cta'],
+                        'ctd' => $day['ctd'],
+                        'request_to_book' => $day['requestToBook'],
+                        'by' => json_encode($day['by'] ?? []),
+                        'rules_applied' => json_encode($day['rulesApplied'] ?? []),
+                    ]
+                );
+            }
+        });
+        return Response::json(['success' => 'Calendar Updated Successfully.']);
     }
 }

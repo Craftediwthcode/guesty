@@ -28,5 +28,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin-auth']], function () 
     Route::get('/properties/ajax/table', [PropertiesController::class, 'ajaxTable'])->name('properties.ajaxTable');
     Route::post('/properties/change-status', [PropertiesController::class, 'changeStatus'])->name('properties.changeStatus');
     Route::post('/properties/change-status/home', [PropertiesController::class, 'changeHome'])->name('properties.homeStatus');
+    Route::post('/properties/sync-calender', [PropertiesController::class, 'syncCalender'])->name('properties.syncCalender');
     Route::resource('/properties', PropertiesController::class);
 });

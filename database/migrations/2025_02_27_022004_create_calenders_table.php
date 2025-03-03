@@ -13,8 +13,6 @@ return new class extends Migration
     {
         Schema::create('calenders', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('property_id');
-            $table->foreign('property_id')->references('id')->on('properties')->onDelete('cascade');
             $table->date('date');
             $table->string('listing_id');
             $table->string('currency');

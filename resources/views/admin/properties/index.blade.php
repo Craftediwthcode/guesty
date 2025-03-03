@@ -237,5 +237,31 @@
                 }
             });
         });
+
+        function syncCalendar(element) {
+            const id = $(element).data('uuid');
+            console.log(id);
+            $.ajax({
+                url: "{{ route('properties.syncCalender') }}",
+                method: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    'property_id': id,
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.success) {
+                        toastr.success(response.success);
+                        table.ajax.reload(null, false);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX Error:', error);
+                    toastr.error('An error occurred while syncing the calendar.');
+                }
+            });
+        }
     </script>
 @endpush

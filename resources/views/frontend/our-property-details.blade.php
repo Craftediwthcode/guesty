@@ -35,6 +35,35 @@
         href="https://www.bnbgulfcoast.com/datepicker/dist/css/hotel-datepicker.css" />
     <link rel="stylesheet" href="https://www.bnbgulfcoast.com/front/css/datepicker.css" />
 </head>
+<style>
+    .dayContainer span.check-in-blocked.red {
+        background-image: url("{{ URL::asset('assets/backend/img/check-out-box.png') }}") !important;
+        color: #222 !important;
+        background-size: contain !important;
+        background-repeat: no-repeat !important;
+        margin-top: 2px !important;
+        margin-bottom: 2px !important;
+    }
+
+    .dayContainer span.check-in-blocked.check-out-blocked.red {
+        color: #fff !important;
+        background-color: #FF3838 !important;
+        background-image: none !important;
+        margin-top: 2px !important;
+        margin-bottom: 2px !important;
+        line-height: 39px !important;
+    }
+
+    .dayContainer span.check-out-blocked {
+        background-image: url("{{ URL::asset('assets/backend/img/check-in-box.png') }}") !important;
+        color: #222 !important;
+        background-size: contain !important;
+        background-repeat: no-repeat !important;
+        margin-top: 2px !important;
+        margin-bottom: 2px !important;
+        line-height: 39px !important;
+    }
+</style>
 
 <body data-bs-spy="scroll" data-bs-target=".navbar" data-bs-offset="100">
     {{-- <div class="loader-head " id="sygnius-loader">
@@ -315,8 +344,10 @@
                     <hr>
                     <div class="availability">
                         <h4>Availability</h4>
-                        <iframe id="calendar-iframe" width="100%" height="400" style="border:0;" src="{{ route('full_calender',$id)}}"allowfullscreen="" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                    </div> 
+                        <iframe id="calendar-iframe" width="100%" height="400" style="border:0;"
+                            src="{{ route('full_calender', $id) }}"allowfullscreen=""
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
                 </div>
                 <div class="col-lg-4 sidebar" id="book">
                     <div class="side-area">
@@ -331,24 +362,18 @@
                         </div>
                         <div class="get-quote">
                             <div class="contact-box">
-                                <form class="form booking_form" id="booking_form"
-                                    action="https://www.bnbgulfcoast.com/reserve" method="get">
-                                    <input type="hidden" name="property_id" value="">
+                                <form class="form" id="booking_form">
                                     <div class="main-cal">
                                         <div class="ovabrw_datetime_wrapper">
-                                            <input required="" autocomplete="off" inputmode="none"
-                                                id="start_date" placeholder="Check in" name="start_date"
+                                            <input id="start_date" placeholder="Check in" name="start_date"
                                                 type="text">
                                             <i class="fa-solid fa-calendar-days"></i>
                                         </div>
                                         <div class="ovabrw_datetime_wrapper">
-                                            <input required="" autocomplete="off" inputmode="none" id="end_date"
-                                                placeholder="Check Out" name="end_date" type="text">
+                                            <input id="end_date" placeholder="Check Out" name="end_date"
+                                                type="text">
                                             <i class="fa-solid fa-calendar-days"></i>
                                         </div>
-                                        <input type="text" id="demo17" value=""
-                                            aria-label="Check-in and check-out dates"
-                                            aria-describedby="demo17-input-description" readonly="">
                                     </div>
                                     <div class="row pet" style="display:none;">
                                         <div class="col-md-12">
@@ -361,12 +386,12 @@
                                         </div>
                                     </div>
                                     <div class="ovabrw_service_select rental_item">
-                                        <input type="text" name="Guests" value="1 Guests" readonly=""
+                                        <input type="text" name="guests_count" readonly=""
                                             class="form-control gst" id="show-target-data" placeholder="Add guests"
                                             title="Choose no. of guests">
                                         <i class="fa-solid fa-users "></i>
-                                        <input type="hidden" value="1" name="adults" id="adults-data">
-                                        <input type="hidden" value="0" name="child" id="child-data">
+                                        <input type="hidden" name="adults" id="adults-data">
+                                        <input type="hidden" name="child" id="child-data">
                                         <div class="adult-popup" id="guestsss">
                                             <i class="fa fa-times close1"></i>
                                             <div class="adult-box">
@@ -1415,10 +1440,15 @@
     <!-- main js -->
     <script type="text/javascript" src="https://www.bnbgulfcoast.com/front/js/main.js?ver=1.0.0"></script>
     <script src="https://www.bnbgulfcoast.com/toastr/toastr.js?ver=1.0.0"></script>
+    <script src="https://www.bnbgulfcoast.com/front/assets/fancybox/jquery.fancybox.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <script src="https://www.bnbgulfcoast.com/front/js/property-detail.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
-        // $(function() {
-        //     $("#sygnius-loader").addClass("d-none");
-        // });
+        $(function() {
+            $("#sygnius-loader").addClass("d-none");
+        });
         AOS.init();
         $(document).ready(function() {
             $(".gst").click(function() {
@@ -1427,15 +1457,35 @@
             $(".close1").click(function() {
                 $("#guestsss").css("display", "none");
             });
-
             $(".gst1").click(function() {
                 $("#guestsss1").css("display", "block");
             });
             $(".close12").click(function() {
                 $("#guestsss1").css("display", "none");
             });
-        });
-        $(document).ready(function() {
+            $('#more-slider').owlCarousel({
+                loop: true,
+                items: 3,
+                margin: 25,
+                dots: false,
+                nav: true,
+                autoplay: true,
+                autoplayTimeout: 4000,
+                smartSpeed: 550,
+                navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    768: {
+                        items: 2
+                    },
+                    1170: {
+                        items: 3
+
+                    }
+                }
+            });
             $("#more").click(function() {
                 $("#less").css("display", "block");
                 $("#more").css("display", "none");
@@ -1446,8 +1496,6 @@
                 $("#more").css("display", "block");
                 $(".abt").css("height", "253px");
             });
-        });
-        $(document).ready(function() {
             $("#mr a").click(function() {
                 $("#ls").css("display", "block");
                 $("#mr").css("display", "none");
@@ -1458,27 +1506,15 @@
                 $("#mr").css("display", "block");
                 $(".readMore_review").css("height", "78px");
             });
-        });
-        $(document).ready(function() {
             $("#menu-toggle1").click(function() {
                 $("#tag1").css("transform", "translateX(0em)");
             });
             $("#close-menu1").click(function() {
                 $("#tag1").css("transform", "translateX(-38em)");
             });
-        });
-        $(document).ready(function() {
             $("#menu-toggle2").click(function() {
                 $("#tag2").toggle();
             });
-        });
-        function playVideo() {
-            $('#mob').trigger('play');
-        }
-        function pauseVideo() {
-            $('#mob').trigger('pause');
-        }
-        $(document).ready(function() {
             $("#pause").click(function() {
                 $("#play").css("display", "block");
                 $("#pause").css("display", "none");
@@ -1487,8 +1523,6 @@
                 $("#pause").css("display", "block");
                 $("#play").css("display", "none");
             });
-        });
-        $(document).ready(function() {
             $("#hmore a").click(function() {
                 $("#hless").css("display", "block");
                 $("#hmore").css("display", "none");
@@ -1499,18 +1533,12 @@
                 $("#hmore").css("display", "block");
                 $(".abt-para").css("height", "199px");
             });
-        });
-        $(document).ready(function() {
             var a = $(".abt-para").height();
             if (a < 199) {
                 $("#hmore").css("display", "none");
             } else {
                 $("#hmore").css("display", "block");
             }
-        });
-    </script>
-    <script>
-        $(document).ready(function() {
             $(".gst").click(function() {
                 $("#guestsss").css("display", "block");
             });
@@ -1520,72 +1548,23 @@
             $(".close111").click(function() {
                 $("#guestsss").css("display", "none");
             });
+            $(document).on("change", "#pet_fee_data_guarav", function() {
+                ajaxCallingData();
+            });
+            $(document).on("change", "#heating_pool_fee_data_guarav", function() {
+                ajaxCallingData();
+            });
+            fetchCalender();
         });
-    </script>
-    <script src="https://www.bnbgulfcoast.com/front/assets/fancybox/jquery.fancybox.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-    <script src="https://www.bnbgulfcoast.com/front/js/property-detail.js"></script>
-    <script>
-        function functiondec($getter_setter, $show, $cal) {
-            $("#submit-button-gaurav-data").hide();
-            val = parseInt($($getter_setter).val());
-            if ($getter_setter == "#adults-data") {
-                if (val > 1) {
-                    val = val - 1;
-                }
-            } else {
-                if (val > 0) {
-                    val = val - 1;
-                }
-            }
-            $($getter_setter).val(val);
-            person1 = val;
-            person2 = parseInt($($cal).val());
-            $show_data = person1 + person2;
-            $show_actual_data = $show_data + " Guests";
-            if ($getter_setter == "#adults-data") {
-                $($getter_setter + '-show').html(val + " Adults");
-                if (val <= 1) {
-                    $($getter_setter + '-show').html(val + " Adult");
-                }
-            } else {
-                $($getter_setter + '-show').html(val + " Children");
-                if (val <= 1) {
-                    $($getter_setter + '-show').html(val + " Child");
-                }
-            }
-            $($show).val($show_actual_data);
-            ajaxCallingData();
+
+        function playVideo() {
+            $('#mob').trigger('play');
         }
 
-        function functioninc($getter_setter, $show, $cal) {
-            $("#submit-button-gaurav-data").hide();
-            val = parseInt($($getter_setter).val());
-            person1 = val;
-            person2 = parseInt($($cal).val());
-            $show_data = person1 + person2;
-            val = val + 1;
-            person1 = val;
-            person2 = parseInt($($cal).val());
-            $show_data = person1 + person2;
-            $($getter_setter).val(val);
-            $show_actual_data = $show_data + " Guests";
-            $($show).val($show_actual_data);
-            if ($getter_setter == "#adults-data") {
-                $($getter_setter + '-show').html(val + " Adults");
-                if (val <= 1) {
-                    $($getter_setter + '-show').html(val + " Adult");
-                }
-            } else {
-                $($getter_setter + '-show').html(val + " Children");
-                if (val <= 1) {
-                    $($getter_setter + '-show').html(val + " Child");
-                }
-            }
-            ajaxCallingData();
+        function pauseVideo() {
+            $('#mob').trigger('pause');
         }
-    </script>
-    <script>
+
         function clearDataForm() {
             $("#start_date").val('');
             $("#end_date").val('');
@@ -1594,12 +1573,6 @@
             $("#gaurav-new-modal-service-area").html('');
             $("#gaurav-new-data-area").html('');
         }
-        $(document).on("change", "#pet_fee_data_guarav", function() {
-            ajaxCallingData();
-        });
-        $(document).on("change", "#heating_pool_fee_data_guarav", function() {
-            ajaxCallingData();
-        });
 
         function ajaxCallingData() {
             $("#sygnius-loader").removeClass("d-none");
@@ -1648,73 +1621,45 @@
                 $("#submit-button-gaurav-data").hide();
             }
         }
-    </script>
-    <script src="https://www.bnbgulfcoast.com/datepicker/node_modules/fecha/dist/fecha.min.js"></script>
-    <script src="https://www.bnbgulfcoast.com/datepicker/dist/js/hotel-datepicker.js"></script>
-    <script>
-        var checkin = ["2025-02-16", "2025-03-07", "2025-03-31", "2025-04-19", "2025-04-25", "2025-05-08", "2025-05-18",
-            "2025-06-15", "2025-07-12"
-        ];
-        var checkout = ["2025-03-04", "2025-03-28", "2025-04-05", "2025-04-23", "2025-04-28", "2025-05-12", "2025-05-25",
-            "2025-07-03", "2025-07-21"
-        ];
-        let blocked = [];
-        console.log(blocked);
-        function initializeDatepicker() {
-            const abc = document.getElementById("demo17");
-            const demo17 = new HotelDatepicker(abc, {
-                endDate: '2027-11-20',
-                noCheckInDates: checkin,
-                noCheckOutDates: checkout,
-                disabledDates: blocked,
-                onDayClick: function() {
-                    const d = new Date();
-                    d.setTime(demo17.start);
-                    document.getElementById("start_date").value = getDateData(d);
-                    d.setTime(demo17.end);
-                    if (Number.isNaN(demo17.end)) {
-                        document.getElementById("end_date").value = '';
-                    } else {
-                        document.getElementById("end_date").value = getDateData(d);
-                        ajaxCallingData();
-                    }
-                },
-                clearButton: function() {
-                    return true;
-                },
-            });
-        }
-        $(document).on("click", "#clear", function() {
-            $("#clear-demo17").click();
-        })
-        x = document.getElementById("month-2-demo17");
-        x.querySelector(".datepicker__month-button--next").addEventListener("click", function() {
-            y = document.getElementById("month-1-demo17");
-            y.querySelector(".datepicker__month-button--next").click();
-        });
-        x = document.getElementById("month-1-demo17");
-        x.querySelector(".datepicker__month-button--prev").addEventListener("click", function() {
-            y = document.getElementById("month-2-demo17");
-            y.querySelector(".datepicker__month-button--prev").click();
-        });
 
         function fetchCalender() {
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: "{{ route('property.fetchCalender') }}",
-                type: "POST",
-                data: {
-                    'property_id': "{{ $id }}"
-                },
+                url: "{{ route('property.calender', $id) }}",
+                type: "GET",
                 success: function(response) {
                     console.log(response);
-                    blocked = [];
-                    response.data.days.forEach(day => {
-                        blocked.push(day.date);
+                    const blockedDates = [];
+                    const blockRefs = [];
+                    response.forEach(day => {
+                        if (day.block_refs) {
+                            try {
+                                const parsedBlockRefs = JSON.parse(day.block_refs);
+                                if (Array.isArray(parsedBlockRefs) && parsedBlockRefs.length > 0) {
+                                    parsedBlockRefs.forEach(block => {
+                                        if (block.startDate && block.endDate) {
+                                            const startDate = new Date(block.startDate)
+                                                .toISOString().split('T')[0];
+                                            const endDate = new Date(block.endDate)
+                                            .toISOString().split('T')[0];
+                                            blockedDates.push({
+                                                startDate,
+                                                endDate
+                                            });
+                                            blockRefs.push(block);
+                                        }
+                                    });
+                                    initializeDatepicker(blockedDates);
+                                } else {
+                                    console.warn("No valid block references found.");
+                                }
+                            } catch (error) {
+                                console.error("Error parsing block_refs JSON:", error);
+                            }
+                        }
                     });
-                    initializeDatepicker();
                 },
                 error: function(xhr, status, error) {
                     console.error('Error:', error);
@@ -1722,50 +1667,77 @@
             });
         }
 
-        function getDateData(objectDate) {
-            let day = objectDate.getDate();
-            let month = objectDate.getMonth() + 1;
-            let year = objectDate.getFullYear();
-            if (day < 10) {
-                day = '0' + day;
-            }
-            if (month < 10) {
-                month = `0${month}`;
-            }
-            format1 = `${year}-${month}-${day}`;
-            return format1;
-            console.log(format1);
-        }
-    </script>
-    <script>
-        $(document).ready(function() {
-            fetchCalender();
-            $('#more-slider').owlCarousel({
-                loop: true,
-                items: 3,
-                margin: 25,
-                dots: false,
-                nav: true,
-                autoplay: true,
-                autoplayTimeout: 4000,
-                smartSpeed: 550,
-                navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
-                responsive: {
-                    0: {
-                        items: 1
-                    },
-                    768: {
-                        items: 2
-
-                    },
-                    1170: {
-
-                        items: 3
-
+        function initializeDatepicker(blockedDates) {
+            console.log('Blocked Dates:', blockedDates);
+            const today = new Date();
+            const nextMonth = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+            const onDayCreate = (dObj, dStr, fp, dayElem) => {
+                const date = dayElem.dateObj.toISOString().split('T')[0];
+                blockedDates.forEach(({
+                    startDate,
+                    endDate
+                }) => {
+                    if (date == startDate && date == endDate) {
+                       dayElem.classList.add('disabled-date');
                     }
+                    else if (date === startDate) {
+                        dayElem.classList.add('check-in-blocked', 'red');
+                    } else if (date === endDate) {
+                        dayElem.classList.add('check-out-blocked', 'red');
+                    } else if (new Date(date).getTime() > new Date(startDate).getTime() &&
+                        new Date(date).getTime() < new Date(endDate).getTime()) {
+                        dayElem.classList.add('check-in-blocked', 'check-out-blocked', 'red');
+                    }
+                });
+            };
+            const startDatePicker = flatpickr("#start_date", {
+                placeholder: 'Check In',
+                defaultDate: today,
+                minDate: today,
+                dateFormat: "Y-m-d",
+                onChange: function(selectedDates, dateStr) {
+                    if (selectedDates.length > 0) {
+                        endDatePicker.set("minDate", dateStr);
+                        endDatePicker.setDate("", false);
+                    }
+                },
+                onDayCreate: onDayCreate
+            });
+            const endDatePicker = flatpickr("#end_date", {
+                placeholder: 'Check Out',
+                defaultDate: nextMonth,
+                minDate: nextMonth,
+                dateFormat: "Y-m-d",
+                onChange: function(selectedDates, dateStr) {
+                    if (selectedDates.length > 0 && typeof createbookingReservation === 'function') {
+                        createbookingReservation();
+                    }
+                },
+                onDayCreate: onDayCreate
+            });
+        }
+
+        function createbookingReservation() {
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{ route('property.createbookingReservation') }}",
+                type: "POST",
+                data: {
+                    guestsCount: $("#guests_count").val(),
+                    checkInDateLocalized: $("#start_date").val(),
+                    checkOutDateLocalized: $("#end_date").val(),
+                    listingId: $id
+                },
+                success: function(response) {
+                    console.log(response);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error:', error);
                 }
             });
-        });
+        }
     </script>
 </body>
 
